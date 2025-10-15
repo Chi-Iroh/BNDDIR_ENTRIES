@@ -33,7 +33,7 @@ CREATE OR REPLACE FUNCTION sqltools.BNDDIR_ENTRIES(
     MODIFIES SQL DATA
     NOT DETERMINISTIC
     NOT FENCED
-    SPECIFIC Z_BNDDIRE
+    SPECIFIC sqltools.Z_BNDDIRE
 
     -- Date Format ISO is required for dates prior to 1940.
     set option COMMIT=*NONE,DATFMT=*ISO,TIMFMT=*HMS
@@ -80,7 +80,7 @@ forEach: FOR Q38 as COZZI_GETBNDDIRE CURSOR FOR
                    ELSE
                    timestamp_format(BNODAT CONCAT BNOTIM,'YYMMDDHH24MISS')
               END as ADD_DTS
-        FROM Z_BNDDIRE
+        FROM QTEMP.Z_BNDDIRE
       DO     -- Send the resulting column's data back as a "row"
        PIPE(BNDRNM,BNDRLB,BNOBNM,BNOLNM, BNOBTP, BNOACT,ADD_DTS);
    end for forEach;
